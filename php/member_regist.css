@@ -1,0 +1,42 @@
+h1 {
+    text-align: center;
+}
+
+p {
+    margin-left: 10px;
+}
+
+.member_regist_form {
+    background-color: lightskyblue;
+    width: 100%;
+}
+
+.container {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.name {
+    overflow:  hidden;
+}
+
+.name p {
+    float: left;
+}
+
+.gender {
+    overflow:  hidden;
+}
+
+.gender p {
+    float: left;
+}
+
+.btn {
+    text-align: center;
+}
+
+.error {
+    color: red;
+}
+

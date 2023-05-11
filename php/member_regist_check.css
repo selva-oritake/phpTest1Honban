@@ -1,0 +1,51 @@
+body {
+    background-color: lightskyblue;
+}
+
+p {
+    margin-right: 25px;
+}
+
+.member_regist_check {
+    width: 100%;
+}
+
+.password {
+    overflow: hidden;
+}
+
+.password p {
+    float: left;
+}
+
+.name {
+    overflow:  hidden;
+}
+
+.name p {
+    float: left;
+}
+
+.gender {
+    overflow:  hidden;
+}
+
+.gender p {
+    float: left;
+}
+
+.address {
+    overflow: hidden;
+}
+
+.address p {
+    float: left;
+}
+
+.email {
+    overflow: hidden;
+}
+
+.email p {
+    float: left;
+}
