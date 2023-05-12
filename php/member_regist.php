@@ -82,9 +82,7 @@
     if (!isset($error)) {
       /* メールアドレスの重複を検知 */
       $member = $dbh->prepare('SELECT COUNT(*) as cnt FROM members WHERE email=?');
-      $member->execute(array(
-          $_POST['email']
-      ));
+      $member->execute(array($_POST['email']));
       $record = $member->fetch();
       if ($record['cnt'] > 0) {
           $error['email'] = 'duplicate';

@@ -1,7 +1,9 @@
 header {
+    display: flex;
+    justify-content: space-between;
     background-color: lightskyblue;
 }
 
-.header_button {
-    text-align: right;
+.greeting p{
+    margin: 0;
 }

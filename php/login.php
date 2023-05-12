@@ -13,24 +13,19 @@
     
     /* メールアドレスとパスワードを照合 */
     if (!isset($error)) {
-        $stmt = $dbh->prepare('SELECT * FROM members WHERE email=? AND password=?');
-        $stmt->execute(array($_POST['email'], $_POST['password']));
+        $stmt = $dbh->prepare('SELECT * FROM members WHERE email=?');
+        $stmt->execute(array($_POST['email']));
         $result = $stmt->fetch();
         
-        if (!isset($result['email'])) {
-          $error['email'] = "not_exist";
-        }    
-        
-        if (!isset($result['password'])) {
-          $error['password'] = "not_exist";
+        if ($_POST['password'] !== $result['password']) {
+          $error['password'] = "disagreement";
         }
-        
-
     }
     
     /* フォームの内容をセッションで保存 */
     if (!isset($error)) {
-        $_SESSION['login'] = $_POST; 
+        $_SESSION['name_sei'] = $result['name_sei'];
+        $_SESSION['name_mei'] = $result['name_mei'];
         header('Location: index.php');
         exit();
     }
@@ -50,13 +45,10 @@
 
   <form action="" method="POST">
     <div class="email">
-      <p>メールアドレス(ID)<textarea name="email" cols="50"></textarea></p> 
+      <p>メールアドレス(ID)<textarea name="email" cols="50"><?php if(!empty($_POST['email'])){echo $_POST['email'];} ?></textarea></p> 
       <?php if ($error['email'] === 'blank'): ?>
         <p class="error">＊メールアドレスを200文字以内で入力してください</p>
       <?php endif ?>
-      <?php if($error['email'] === 'not_exist'): ?>
-        <p>＊メールアドレスが存在しません</p>
-      <?php endif; ?>
     </div>
 
     <div class="password">
@@ -64,8 +56,8 @@
       <?php if ($error['password'] === 'blank'): ?>
         <p class="error">＊パスワードを8~20文字の半角英数字で入力してください</p>
       <?php endif ?>
-      <?php if($error['password'] === 'not_exist'): ?>
-        <p>＊パスワードが一致しません</p>
+      <?php if($error['password'] === 'disagreement'): ?>
+        <p class="error">＊IDもしくはパスワードが間違っています</p>
       <?php endif; ?>
     </div>
 
