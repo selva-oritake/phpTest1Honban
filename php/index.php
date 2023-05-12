@@ -14,7 +14,7 @@
 <body>
 <header>
     <div class="greeting">
-      <?php if (isset($_SESSION[''])) :?>
+      <?php if (isset($_SESSION['name_sei'])) :?>
           <P>ようこそ<?php echo $_SESSION['name_sei']. $_SESSION['name_mei']; ?>様</P>
         <?php endif ?>
     </div>
@@ -24,6 +24,7 @@
         <input type="button" value="ログイン" onclick="location.href='login.php'">
       <?php endif ?>
       <?php if (isset($_SESSION['name_sei'])) :?>
+        <input type="button" value="新規スレッド作成" onclick="location.href='thread_regist.php'">
         <input type="button" value="ログアウト" onclick="location.href='index.php'; <?php session_destroy(); ?>">
       <?php endif ?>
     </div>
