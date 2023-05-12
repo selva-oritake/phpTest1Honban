@@ -1,6 +1,11 @@
 <?php
   session_start();
   require_once('db_connect.php');
+
+  if (isset($_POST['logout'])) {
+      session_destroy();
+      header('Location: index.php');
+  }
   
 ?>
 
@@ -13,21 +18,23 @@
 </head>
 <body>
 <header>
+  <form action="" method="post">
     <div class="greeting">
-      <?php if (isset($_SESSION['name_sei'])) :?>
+      <?php if (isset($_SESSION['member_id'])) :?>
           <P>ようこそ<?php echo $_SESSION['name_sei']. $_SESSION['name_mei']; ?>様</P>
         <?php endif ?>
     </div>
     <div class="header_button">
-      <?php if (!isset($_SESSION['name_sei'])) :?>
+      <?php if (!isset($_SESSION['member_id'])) :?>
         <input type="button" value="新規会員登録" onclick="location.href='member_regist.php'">
         <input type="button" value="ログイン" onclick="location.href='login.php'">
       <?php endif ?>
-      <?php if (isset($_SESSION['name_sei'])) :?>
+      <?php if (isset($_SESSION['member_id'])) :?>
         <input type="button" value="新規スレッド作成" onclick="location.href='thread_regist.php'">
-        <input type="button" value="ログアウト" onclick="location.href='index.php'; <?php session_destroy(); ?>">
+        <input type="submit" name="logout" value="ログアウト">
       <?php endif ?>
     </div>
+  </form>
 </header>
 </body>
 </html>

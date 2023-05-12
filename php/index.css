@@ -1,9 +1,21 @@
 header {
-    display: flex;
-    justify-content: space-between;
     background-color: lightskyblue;
+    height: 40px;
+}
+
+ form {
+    display:flex;
+    justify-content:space-between;
+}
+
+.greeting {
+    display: inline-block;
 }
 
 .greeting p{
     margin: 0;
+}
+
+.header_button {
+    display: inline-block;
 }

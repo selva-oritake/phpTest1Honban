@@ -100,7 +100,6 @@
     if (!isset($error)) {
       $_SESSION['join'] = $_POST;   // フォームの内容をセッションで保存
       header('Location: member_regist_check.php');
-      exit();
     }
   }
 ?>

@@ -26,6 +26,7 @@
     if (!isset($error)) {
         $_SESSION['name_sei'] = $result['name_sei'];
         $_SESSION['name_mei'] = $result['name_mei'];
+        $_SESSION['member_id'] = $result['id'];
         header('Location: index.php');
         exit();
     }
