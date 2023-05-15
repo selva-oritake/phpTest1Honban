@@ -1,26 +1,29 @@
 <?php
+  date_default_timezone_set('Asia/Tokyo');
   session_start();
   require_once('db_connect.php');
   
   // ログインチェック
-  if (empty($_SESSION['member_id'])) {
+  if (empty($_SESSION['member_id']) || empty($_SESSION['title'])) {
     header('Location: index.php');
   }
 
   if (!empty($_POST['thread_regist_btn'])) {
+    $created_at = date("Y-m-d H:i:s");
     
     // 入力情報をデータベースに登録
     $title = $_SESSION['title'];
     $content = $_SESSION['content'];
     $member_id = $_SESSION['member_id'];
 
-    $sql = "INSERT into threads (title, content, member_id) values (:title, :content, :member_id)";
+    $sql = "INSERT into threads (title, content, member_id, created_at ) values (:title, :content, :member_id, :created_at)";
     $stmt = $dbh->prepare($sql);
-    $params = array(':title' => $title, ':content' => $content, ':member_id' => $member_id);
+    $params = array(':title' => $title, ':content' => $content, ':member_id' => $member_id, ':created_at' => $created_at,);
     $stmt->execute($params);
 
-    unset($title, $content); // セッションを破棄
-    header('Location: index.php');
+    unset($_SESSION['title']); // セッションを破棄
+    unset($_SESSION['content']);
+    header('Location: thread.php');
   }
   
 ?>

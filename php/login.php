@@ -15,7 +15,7 @@
     if (!isset($error)) {
         $stmt = $dbh->prepare('SELECT * FROM members WHERE email=?');
         $stmt->execute(array($_POST['email']));
-        $result = $stmt->fetch();
+        $result = $stmt->fetch(); //ヒットしたデータが1つの場合はfetch
         
         if ($_POST['password'] !== $result['password']) {
           $error['password'] = "disagreement";

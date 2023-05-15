@@ -25,6 +25,7 @@
         <?php endif ?>
     </div>
     <div class="header_button">
+      <input type="button" value="スレッド一覧" onclick="location.href='thread.php'">
       <?php if (!isset($_SESSION['member_id'])) :?>
         <input type="button" value="新規会員登録" onclick="location.href='member_regist.php'">
         <input type="button" value="ログイン" onclick="location.href='login.php'">

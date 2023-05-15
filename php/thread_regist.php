@@ -55,7 +55,9 @@
       </div>  
       <div class="btn">
       <input type="submit" value="確認画面へ"><br>
+      <input type="button" value="一覧に戻る" onclick="location.href='thread.php'"><br>
       <input type="button" value="トップに戻る" onclick="location.href='index.php'">
+      
       </div>
     </form>
 </body>
