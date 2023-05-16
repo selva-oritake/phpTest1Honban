@@ -1,0 +1,18 @@
+header {
+    background-color: lightskyblue;
+    height: 40px;
+    display:flex;
+    justify-content:right;
+}
+
+.detail {
+    border: 5px double #aaa;
+}
+
+.comment_form {
+    margin-top: 10px;
+}
+
+.comment_btn {
+    display: block;
+}
