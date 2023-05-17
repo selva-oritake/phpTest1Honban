@@ -16,3 +16,18 @@ header {
 .comment_btn {
     display: block;
 }
+
+.error {
+    color: red;
+}
+
+.prev_next {
+    background-color: lightgray;
+    display: flex;
+    justify-content: space-between;
+}
+
+.glayout {
+    pointer-events: none;
+    color: #aaa; 
+}
