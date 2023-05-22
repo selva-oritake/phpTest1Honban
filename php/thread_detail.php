@@ -22,20 +22,24 @@
   $stmt->execute(array($_GET['id']));
   $result3 = $stmt->fetchAll();
 
+
   //コメント総数を取得
   $stmt = $dbh->prepare("SELECT COUNT(*) FROM comments WHERE thread_id=?");
   $stmt->execute(array($result['id']));
   $count = $stmt->fetchColumn();
   
   //ログイン者のいいね数を取得 1 or 0
-  $stmt = $dbh->prepare("SELECT COUNT(*) FROM likes WHERE comment_id=? AND member_id=? ");
-  $stmt->execute(array($comment_id, $member_id));
-  $my_like_count = $stmt->fetchColumn();
+  $stmt = $dbh->prepare("SELECT count(*) AS my_like_count FROM likes WHERE member_id=? GROUP BY comment_id");
+  $stmt->execute(array($member_id));
+  $my_like_count = $stmt->fetchAll();
+
+  //mergeしてみた
+  $result3_merge = array($result3, $my_like_count);
 
   //チェック用
-  var_dump($my_like_count);
-  var_dump($comment_id);
-  //var_dump($_SESSION['member_id']);
+  //var_dump($my_like_count);
+  var_dump($result3_merge);
+  //var_dump($member_id);
 
   if (!empty($_POST['comment_btn'])) {
       if($_POST['comment'] === "" || mb_strlen($_POST['comment']) > 500) {
@@ -59,7 +63,7 @@
   }
 
   //いいねボタン
-  if (!empty($_POST['heart_clear']) && $my_like_count < 1) {
+  if (!empty($_POST['heart_clear'])) {
       $heart_clear = $_POST['heart_clear'];
       $member_id = $_SESSION['member_id'];
       $comment_id = $_POST['comment_id'];
@@ -143,7 +147,7 @@
       <p><?php echo nl2br($row['comment']); ?></p>
 
       
-      <?php if ($my_like_count < 1 ): ?>
+      <?php if ($row['my_like_count'] < 1 ): ?>
         <form action="" method="post">
           <input name="comment_id" type="text" value="<?php echo $row['id']; ?>">
           <input name="heart_clear" class="heart_clear" type="submit" value="♡">
