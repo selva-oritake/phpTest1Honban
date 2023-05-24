@@ -16,7 +16,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>ホーム画面</title>
+<title>スレッド一覧画面</title>
 <link rel="stylesheet" href="thread.css">
 </head>
 <body>

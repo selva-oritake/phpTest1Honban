@@ -3,9 +3,9 @@
   require_once('db_connect.php');
 
   $member_id = $_SESSION['member_id'];
-  $comment_id = $_SESSION['comment_id'];
+  $comment_id = $_POST['comment_id'];
 
-
+  //チェック用
   
   //スレッドのID一致するデータをthreadsから取得
   $stmt = $dbh->prepare('SELECT * FROM threads WHERE id=?');
@@ -18,28 +18,28 @@
   $result2 = $stmt->fetch();  
 
   //commentsとmembersとlikesを結合し、スレッドIDが一致するデータを取得
-  $stmt = $dbh->prepare("SELECT comments.*, name_sei, name_mei, count(comment_id) AS like_count FROM comments LEFT JOIN members ON comments.member_id = members.id LEFT JOIN likes ON comments.id = likes.comment_id WHERE thread_id=? GROUP BY comments.id");
-  $stmt->execute(array($_GET['id']));
+  $stmt = $dbh->prepare("SELECT comments.*, name_sei, name_mei, count(comment_id) AS like_count, SUM(likes.member_id = ?) AS my_like_count FROM comments LEFT JOIN members ON comments.member_id = members.id LEFT JOIN likes ON comments.id = likes.comment_id WHERE thread_id=? GROUP BY comments.id");
+  $stmt->execute(array($member_id, $_GET['id']));
   $result3 = $stmt->fetchAll();
-
 
   //コメント総数を取得
   $stmt = $dbh->prepare("SELECT COUNT(*) FROM comments WHERE thread_id=?");
   $stmt->execute(array($result['id']));
   $count = $stmt->fetchColumn();
-  
-  //ログイン者のいいね数を取得 1 or 0
-  $stmt = $dbh->prepare("SELECT count(*) AS my_like_count FROM likes WHERE member_id=? GROUP BY comment_id");
-  $stmt->execute(array($member_id));
-  $my_like_count = $stmt->fetchAll();
 
-  //mergeしてみた
-  $result3_merge = array($result3, $my_like_count);
+  //ページング
+  define('MAX','5');
+  $max_page = ceil($count / MAX);
 
-  //チェック用
-  //var_dump($my_like_count);
-  var_dump($result3_merge);
-  //var_dump($member_id);
+  if(isset($_GET['page'])){
+    $now = $_GET['page'];
+
+  }else{
+    $now = 1;
+  }
+
+  $start_no = ($now - 1) * MAX;
+  $comment_list = array_slice($result3, $start_no, MAX, true);
 
   if (!empty($_POST['comment_btn'])) {
       if($_POST['comment'] === "" || mb_strlen($_POST['comment']) > 500) {
@@ -63,10 +63,7 @@
   }
 
   //いいねボタン
-  if (!empty($_POST['heart_clear'])) {
-      $heart_clear = $_POST['heart_clear'];
-      $member_id = $_SESSION['member_id'];
-      $comment_id = $_POST['comment_id'];
+  if (!empty($_POST['heart_clear']) && !empty($_SESSION['member_id'])) {
 
       $sql = "INSERT into likes (member_id, comment_id) values (:member_id, :comment_id)";
       $stmt = $dbh->prepare($sql);
@@ -74,34 +71,24 @@
       $stmt->execute($params);
 
       $_SESSION['comment_id'] = $_POST['comment_id'];
-      header('Location: thread_detail.php?id='.$_GET['id'].'');
-  } elseif (!empty($_POST['heart_red'])) {
-      $heart_red = $_POST['heart_red'];
-      $member_id = $_SESSION['member_id'];
-      $comment_id = $_POST['comment_id'];
-
+      header('Location: thread_detail.php?id='.$_GET['id'].'&page='.$now.'');
+  } elseif (!empty($_POST['heart_red']) && !empty($_SESSION['member_id'])) {
       
       $stmt = $dbh->prepare("DELETE FROM likes WHERE comment_id=? AND member_id=? ");
       $stmt->execute(array($comment_id, $member_id));
       
       $_SESSION['comment_id'] = $_POST['comment_id'];
-      header('Location: thread_detail.php?id='.$_GET['id'].'');
+      header('Location: thread_detail.php?id='.$_GET['id'].'&page='.$now.'');
+
+  } elseif (!empty($_POST['heart_clear']) && empty($_SESSION['member_id'])) {
+      header('Location: member_regist.php');
+  
   } else {
 
   }
   
-  //ページング
-  define('MAX','5');
-  $max_page = ceil($count / MAX);
+  
 
-  if(isset($_GET['page'])){
-    $now = $_GET['page'];
-  }else{
-    $now = 1;
-  }
-
-  $start_no = ($now - 1) * MAX;
-  $comment_list = array_slice($result3, $start_no, MAX, true);
 ?>
 
 <!DOCTYPE html>
@@ -120,7 +107,7 @@
 
   <div class="title">
     <p><?php echo $result['title']; ?></p>
-    <p><?php echo $count. "コメント"."  ".date("Y-m-d H:i", strtotime($result['created_at'])); ?></p>
+    <p><?php echo $count. "コメント"."  ".date("n/j/y H:i", strtotime($result['created_at'])); ?></p>
   </div>
   
   <div class="prev_next">
@@ -129,7 +116,7 @@
   </div>
 
   <div class="detail">
-    <p><?php echo "投稿者:".$result2['name_sei']." ".$result2['name_mei']."  ".date("Y-m-d H:i", strtotime($result['created_at'])); ?></p>
+    <p><?php echo "投稿者:".$result2['name_sei']." ".$result2['name_mei']."  ".date("Y.n.j H:i", strtotime($result['created_at'])); ?></p>
     <p><?php echo nl2br($result['content']); ?></p>
   </div>
 
@@ -148,14 +135,14 @@
 
       
       <?php if ($row['my_like_count'] < 1 ): ?>
-        <form action="" method="post">
-          <input name="comment_id" type="text" value="<?php echo $row['id']; ?>">
+        <form class="like" action="" method="post">
+          <input name="comment_id" type="hidden" value="<?php echo $row['id']; ?>">
           <input name="heart_clear" class="heart_clear" type="submit" value="♡">
           <span><?php echo $row['like_count']; ?></span>
         </form>
       <?php else:?>
-        <form action="" method="post">
-          <input name="comment_id" type="text" value="<?php echo $row['id']; ?>">
+        <form class="like" action="" method="post">
+          <input name="comment_id" type="hidden" value="<?php echo $row['id']; ?>">
           <input name="heart_red" class="heart_red" type="submit" value="♥">
           <span><?php echo $row['like_count']; ?></span>
         </form>

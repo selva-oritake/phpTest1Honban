@@ -32,7 +32,10 @@ header {
     color: #aaa; 
 }
 
-.heart_clear {
-    text-decoration: none;
-    color: black;
+.heart_red {
+    color: red;
+}
+
+.like {
+    border-bottom: solid #aaa;
 }
