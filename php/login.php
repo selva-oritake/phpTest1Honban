@@ -19,7 +19,10 @@
         
         if ($_POST['password'] !== $result['password']) {
           $error['password'] = "disagreement";
+        } elseif (isset($result['deleted_at'])) {
+          $error['id_deleted'] = "deleted";
         }
+
     }
     
     /* フォームの内容をセッションで保存 */
@@ -57,7 +60,7 @@
       <?php if ($error['password'] === 'blank'): ?>
         <p class="error">＊パスワードを8~20文字の半角英数字で入力してください</p>
       <?php endif ?>
-      <?php if($error['password'] === 'disagreement'): ?>
+      <?php if($error['password'] === 'disagreement' || $error['id_deleted'] === "deleted"): ?>
         <p class="error">＊IDもしくはパスワードが間違っています</p>
       <?php endif; ?>
     </div>

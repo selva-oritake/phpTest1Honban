@@ -1,3 +1,11 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
 header {
     background-color: lightskyblue;
     height: 40px;
@@ -18,4 +26,24 @@ header {
 
 .header_button {
     display: inline-block;
+}
+
+.container{
+    display: flex;
+    flex-flow: column;
+    height: 90%;
+}
+
+.space {
+    flex: 1;
+}
+
+footer {
+    background-color: lightskyblue;
+    height: 40px;
+}
+
+.withdrawal_button {
+
+    text-align: right;
 }

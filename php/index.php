@@ -37,5 +37,19 @@
     </div>
   </form>
 </header>
+
+<div class="container">
+  <div class="space"></div>
+  <footer>
+    <div class="footer">
+      <div class="withdrawal_button">
+      <?php if (isset($_SESSION['member_id'])) :?>
+        <input type="button" value="退会" onclick="location.href='member_withdrawal.php'">
+      <?php endif ?>
+      </div>
+    </div>
+  </footer>
+</div>
+
 </body>
 </html>
