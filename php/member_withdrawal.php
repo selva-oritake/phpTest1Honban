@@ -5,6 +5,11 @@
   $member_id = $_SESSION['member_id'];
   $deleted_at = date("Y-m-d H:i:s");
 
+  // ログインチェック
+  if (empty($_SESSION['member_id'])) {
+    header('Location: index.php');
+}
+
   if (isset($_POST['withdrawal'])) {
     $stmt = $dbh->prepare("UPDATE members SET deleted_at =? WHERE id=? ");
     $stmt->execute(array($deleted_at, $member_id));

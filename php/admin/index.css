@@ -1,0 +1,18 @@
+header {
+    background-color: lightskyblue;
+    height: 40px;
+}
+
+.greeting {
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.greeting p{
+    margin: 0;
+}
+
+.header_button {
+    display: inline-block;
+    float: right;
+}
