@@ -16,8 +16,6 @@
         $stmt = $dbh->prepare('SELECT * FROM administers WHERE login_id=?');
         $stmt->execute(array($_POST['login_id']));
         $result = $stmt->fetch(); //ヒットしたデータが1つの場合はfetch
-
-        var_dump($result);
         
         if ($_POST['password'] !== $result['password']) {
           $error['password'] = "disagreement";

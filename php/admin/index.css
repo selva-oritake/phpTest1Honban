@@ -16,3 +16,7 @@ header {
     display: inline-block;
     float: right;
 }
+
+.member_button{
+    text-align: center;
+}

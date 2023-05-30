@@ -1,0 +1,45 @@
+header {
+    background-color: lightskyblue;
+    height: 40px;
+}
+
+.header_button {
+    display: inline-block;
+    float: right;
+}
+
+.radio_button {
+    display: inline-block;
+}
+
+.search_button {
+    text-align: center;
+}
+
+.prev_next {
+    width: 30px;
+    margin: 0 10px;
+    padding: 5px 10px;
+    text-align: center;
+    background: #f0f0f0;
+    color: black;
+  }
+
+  .page_number {
+    width: 30px;
+    padding: 5px;
+    text-align: center;
+    background: #f0f0f0;
+    color: black;
+  }
+
+  .now_page_number {
+    width: 30px;
+    padding: 5px;
+    text-align: center;
+    background: #b8b8b8;
+    color: white;
+    font-weight: bold;
+  }
+
+  a:link {text-decoration:none }

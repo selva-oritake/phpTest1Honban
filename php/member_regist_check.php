@@ -2,25 +2,28 @@
   session_start();
   require_once('db_connect.php');
 
+  // 入力情報をデータベースに登録
+  $name_sei = $_SESSION['join']['name_sei'];
+  $name_mei= $_SESSION['join']['name_mei'];
+  $gender = $_SESSION['join']['gender'];
+  $pref = $_SESSION['join']['pref'];
+  $etc_address = $_SESSION['join']['etc_address'];
+  $password = $_SESSION['join']['password'];
+  $email = $_SESSION['join']['email'];
+
   if (!empty($_POST['complete_btn'])) {
+    $created_at = date("Y-m-d H:i:s");
 
-    // 入力情報をデータベースに登録
-    $name_sei = $_SESSION['join']['name_sei'];
-    $name_mei= $_SESSION['join']['name_mei'];
-    $gender = $_SESSION['join']['gender'];
-    $pref = $_SESSION['join']['pref'];
-    $etc_address = $_SESSION['join']['etc_address'];
-    $password = $_SESSION['join']['password'];
-    $email = $_SESSION['join']['email'];
-
-    $sql = "INSERT into members (name_sei, name_mei, gender, pref_name, address, password, email) values (:name_sei, :name_mei, :gender, :pref_name, :address, :password, :email)";
+    $sql = "INSERT into members (name_sei, name_mei, gender, pref_name, address, password, email, created_at) values (:name_sei, :name_mei, :gender, :pref_name, :address, :password, :email, :created_at)";
     $stmt = $dbh->prepare($sql);
-    $params = array(':name_sei' => $name_sei, ':name_mei' => $name_mei, ':gender' => $gender, ':pref_name' => $pref, ':address' => $etc_address, ':password' => $password, ':email' => $email);
+    $params = array(':name_sei' => $name_sei, ':name_mei' => $name_mei, ':gender' => $gender, ':pref_name' => $pref, ':address' => $etc_address, ':password' => $password, ':email' => $email, ':created_at' => $created_at);
     $stmt->execute($params);
 
     unset($_SESSION['join']);   // セッションを破棄
     header('Location: member_regist_complete.php');
     exit();
+
+    var_dump($gender);
   }
 ?>
 
@@ -44,7 +47,7 @@
 
       <div class="gender">
         <p>性別</p>
-        <p><?php echo $_SESSION['join']['gender']; ?></p>
+        <p><?php if($gender == 1){ echo "男性";} elseif ($gender == 2) {echo "女性";} ?></p>
       </div>
 
       <div class="address">

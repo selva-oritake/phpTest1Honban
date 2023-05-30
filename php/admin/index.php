@@ -1,5 +1,7 @@
 <?php
   session_start();
+  unset($_SESSION['join']);
+  unset($_SESSION['count']);
   require_once('db_connect.php');
 
     // ログインチェック
@@ -32,6 +34,10 @@
     </div>
   </form>
 </header>
+
+<div class="member_button">
+  <input type="button" value="会員一覧" onclick="location.href='member.php'">
+</div>
 
 </body>
 </html>
