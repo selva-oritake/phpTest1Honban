@@ -8,6 +8,10 @@ header {
     float: right;
 }
 
+.member_regist_button {
+    margin: 30px 0;
+}
+
 .radio_button {
     display: inline-block;
 }

@@ -1,6 +1,6 @@
 <?php
   session_start();
-  unset($_SESSION['join']);
+  unset($_SESSION['member']);
   unset($_SESSION['count']);
   require_once('db_connect.php');
 
