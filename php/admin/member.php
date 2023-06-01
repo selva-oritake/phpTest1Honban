@@ -1,9 +1,12 @@
 <?php
   session_start();
+  unset($_SESSION['join']);
   require_once('db_connect.php');
+  
 
   $id = $_POST['id'];
-  $gender = $_POST['gender'];
+  $male = $_POST['male'];
+  $female = $_POST['female'];
   $pref = $_POST['pref'];
   $freeword = $_POST['freeword'];
 
@@ -29,9 +32,11 @@
       $params[':id'] = $id;
     }
     
-    if (!empty($gender)) {
-      $conditions[] = "gender = :gender";
-      $params[':gender'] = $gender;
+    if (!empty($male) || !empty($female)) {
+      $conditions[] = "(gender = :male OR gender = :female)";
+      $params[':male'] = $male;
+      $params[':female'] = $female;
+      
     }
     
     if (!empty($pref)) {
@@ -118,6 +123,10 @@
     </div>
   </header>
 
+  <div class="member_regist_button">
+    <input type="button" value="会員登録" onclick="location.href='member_regist.php'">
+  </div>
+
   <form action="" method="post">
     <table>
       <tr>
@@ -127,9 +136,8 @@
       <tr>
         <td>性別</td>
         <td>
-          <input type="hidden" name="gender" value="" checked>
-          <p class="radio_button"><input type="radio" name="gender" value="1" <?php if(!empty($_POST['gender']) && $_POST['gender'] == 1){echo 'checked';} ?>>男性</p>
-          <p class="radio_button"><input type="radio" name="gender" value="2" <?php if(!empty($_POST['gender']) && $_POST['gender'] == 2){echo 'checked';} ?>>女性</p>
+          <input type="checkbox" name="male" value="1">男性
+          <input type="checkbox" name="female" value="2">女性
         </td>
       </tr>
       <tr>
@@ -217,6 +225,7 @@
             <a href="?sort=created_at&order=asc">▼</a>
           <?php endif; ?>
         </th>
+        <th>編集</th>
       </tr>
       <?php foreach ($member_list as $row): ?>
       <tr>
@@ -225,6 +234,7 @@
         <td><?php if($row['gender'] == 1){ echo "男性";} elseif ($row['gender'] == 2) {echo "女性";} ?></td>
         <td><?php echo $row['pref_name'].$row['address']; ?></td>
         <td><?php echo date("n/j/y", strtotime($row['created_at'])); ?></td>
+        <td><a href="member_edit.php">編集</a></td>
       </tr>
       <?php endforeach; ?>
     </table>
