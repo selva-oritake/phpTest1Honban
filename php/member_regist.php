@@ -13,7 +13,7 @@
     if ($_POST['name_mei'] === "" || mb_strlen($_POST['name_mei']) > 20) {
       $error['name_mei'] = "blank";
     }
-    if ($_POST['gender'] !== "男性" && $_POST['gender'] !== "女性") {
+    if ($_POST['gender'] != 1 && $_POST['gender'] != 2) {
       $error['gender'] = "blank";
     }
     if ($_POST['pref'] !== "北海道" &&
@@ -132,9 +132,9 @@
 
       <div class="gender">
         <p>性別</p>
-        <input type="hidden" name="gender" value="" checked>
-        <p><input type="radio" name="gender" value="男性" <?php if(!empty($_POST['gender']) && $_POST['gender'] === "男性"){echo 'checked';} ?>>男性</p>
-        <p><input type="radio" name="gender" value="女性" <?php if(!empty($_POST['gender']) && $_POST['gender'] === "女性"){echo 'checked';} ?>>女性</p>
+        <input class="radio_button" type="hidden" name="gender" value="" checked>
+        <p><input type="radio" name="gender" value="1" <?php if(!empty($_POST['gender']) && $_POST['gender'] == 1){echo 'checked';} ?>>男性</p>
+        <p><input type="radio" name="gender" value="2" <?php if(!empty($_POST['gender']) && $_POST['gender'] == 2){echo 'checked';} ?>>女性</p>
       </div>
       <?php if (!empty($error['gender']) && $error['gender'] === 'blank'): ?>
         <p class="error">＊性別を選択してください</p>

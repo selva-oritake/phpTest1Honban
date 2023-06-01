@@ -234,7 +234,7 @@
         <td><?php if($row['gender'] == 1){ echo "男性";} elseif ($row['gender'] == 2) {echo "女性";} ?></td>
         <td><?php echo $row['pref_name'].$row['address']; ?></td>
         <td><?php echo date("n/j/y", strtotime($row['created_at'])); ?></td>
-        <td><a href="member_edit.php">編集</a></td>
+        <td><a href ="member_edit.php?id=<?php echo $row['id']; ?>">編集</a></td>
       </tr>
       <?php endforeach; ?>
     </table>

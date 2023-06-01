@@ -1,0 +1,51 @@
+header {
+    background-color: lightskyblue;
+    height: 40px;
+}
+
+.header_button {
+    display: inline-block;
+    float: right;
+}
+
+p {
+    margin-left: 10px;
+}
+
+.member_regist_form {
+    width: 100%;
+}
+
+.container {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.id p {
+    display: inline;
+}
+
+.name {
+    overflow:  hidden;
+}
+
+.name p {
+    float: left;
+}
+
+.gender {
+    overflow:  hidden;
+}
+
+.gender p {
+    float: left;
+}
+
+.btn {
+    text-align: center;
+}
+
+.error {
+    color: red;
+}
+

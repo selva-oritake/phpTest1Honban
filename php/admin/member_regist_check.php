@@ -20,8 +20,9 @@
     $stmt->execute($params);
 
     unset($_SESSION['join']);   // セッションを破棄
-    header('Location: member_regist_complete.php');
+    header('Location: member.php');
     exit();
+
   }
 ?>
 
@@ -29,13 +30,19 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>会員情報確認画面</title>
+<title>会員情報登録確認画面</title>
 <link rel="stylesheet" href="member_regist_check.css">
 
 </head>
 <body>
+<header> 
+    <span>会員登録</span>
+    <div class="header_button">
+      <input name='back' type="button" value="一覧へ戻る" onclick="location.href='member.php'">
+    </div>
+  </header>
+  
   <div class="member_regist_check">
-    <h1>会員情報確認画面</h1>
     <form action="" method="POST">
       <div class="name">
         <p>氏名</p>
@@ -65,7 +72,7 @@
       </div>
 
       <div class="btn"><input  name="complete_btn" type="submit" value="登録完了"></div>
-      <div class="btn"><input name="prev_btn" type="button" value="前に戻る" onclick="history.back()"></div>
+      <div class="btn"><input name="prev_btn" type="button" value="前に戻る" onclick="location.href='member_regist.php'"></div>
 
     </form>
 
