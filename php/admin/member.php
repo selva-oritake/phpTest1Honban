@@ -226,15 +226,17 @@
           <?php endif; ?>
         </th>
         <th>編集</th>
+        <th>詳細</th>
       </tr>
       <?php foreach ($member_list as $row): ?>
       <tr>
         <td><?php echo $row['id']; ?></td>
-        <td><?php echo $row['name_sei']."　".$row['name_mei']; ?></td>
+        <td><a href ="member_detail.php?id=<?php echo $row['id']; ?>"><?php echo $row['name_sei']."　".$row['name_mei']; ?></a></td>
         <td><?php if($row['gender'] == 1){ echo "男性";} elseif ($row['gender'] == 2) {echo "女性";} ?></td>
         <td><?php echo $row['pref_name'].$row['address']; ?></td>
         <td><?php echo date("n/j/y", strtotime($row['created_at'])); ?></td>
         <td><a href ="member_edit.php?id=<?php echo $row['id']; ?>">編集</a></td>
+        <td><a href ="member_detail.php?id=<?php echo $row['id']; ?>">詳細</a></td>
       </tr>
       <?php endforeach; ?>
     </table>

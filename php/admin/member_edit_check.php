@@ -53,6 +53,10 @@
   
   <div class="member_regist_check">
     <form action="" method="POST">
+      <div class="id">
+        <p>ID</p>
+        <p><?php echo $id; ?></p>
+      </div>
       <div class="name">
         <p>氏名</p>
         <p><?php echo $_SESSION['join']['name_sei']; ?></p>
